@@ -1,9 +1,17 @@
 package fr.warzou.rennes1.connect4.utils;
 
+import fr.warzou.rennes1.connect4.utils.math.MathValidator;
+
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Objects;
 
+/**
+ * Allow to create a matrix of some object.
+ * <br>
+ * This not a math matrix, just a bi-dimensional array.
+ * @param <O> object type
+ */
 public class ObjectMatrix<O> {
 
     private final Class<O> type;
@@ -23,12 +31,19 @@ public class ObjectMatrix<O> {
             Array.set(this.matrix, i, fill);
     }
 
+    /**
+     * @param x target x
+     * @param y target y
+     * @return value a target x and y position
+     */
     public O getValue(int x, int y) {
+        checkIndexAccess(x, y);
         Object o = Array.get(this.matrix, x + y * width);
         return this.type.cast(o);
     }
 
     public void setValue(int x, int y, O value) {
+        checkIndexAccess(x, y);
         Array.set(this.matrix, x + y * width, value);
     }
 
@@ -54,6 +69,11 @@ public class ObjectMatrix<O> {
             builder.replace(builder.length() - 2, builder.length(), "]\n");
         }
         return builder.substring(0, builder.length() - 1);
+    }
+
+    private void checkIndexAccess(int x, int y) {
+        MathValidator.inInterval(x, 0, this.width, true, false);
+        MathValidator.inInterval(y, 0, this.height, true, false);
     }
 
     @Override
