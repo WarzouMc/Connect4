@@ -27,14 +27,24 @@ public class ObjectMatrix<O> {
         this.width = width;
         this.height = height;
 
-        for (int i = 0; i < width * height; i++)
-            Array.set(this.matrix, i, fill);
+        fillMatrix(fill);
     }
 
     /**
+     * Returns value at a target index in matrix.
+     * @param index target index
+     * @return value at a target index
+     */
+    public O getValue(int index) {
+        int[] indexes = toIndexes(index);
+        return getValue(indexes[0], indexes[1]);
+    }
+
+    /**
+     * Returns value at a target index in matrix.
      * @param x target x
      * @param y target y
-     * @return value a target x and y position
+     * @return value at a target x and y position
      */
     public O getValue(int x, int y) {
         checkIndexAccess(x, y);
@@ -42,23 +52,64 @@ public class ObjectMatrix<O> {
         return this.type.cast(o);
     }
 
+    /**
+     * Set a value at a target index in matrix.
+     * @param index target index
+     * @param value new value to set
+     */
+    public void setValue(int index, O value) {
+        int[] indexes = toIndexes(index);
+        setValue(indexes[0], indexes[1], value);
+    }
+
+    /**
+     * Set a value at a target index in matrix.
+     * @param x target x
+     * @param y target y
+     * @param value new value to set
+     */
     public void setValue(int x, int y, O value) {
         checkIndexAccess(x, y);
         Array.set(this.matrix, x + y * width, value);
     }
 
+    /**
+     * Fill this matrix with a specific value.
+     * @param fill value
+     */
+    public void fillMatrix(O fill) {
+        for (int i = 0; i < this.width * this.height; i++)
+            setValue(i, fill);
+    }
+
+    /**
+     * Returns matrix width.
+     * @return matrix width
+     */
     public int getWidth() {
         return this.width;
     }
 
+    /**
+     * Returns matrix height.
+     * @return matrix height
+     */
     public int getHeight() {
         return this.height;
     }
 
+    /**
+     * Returns this matrix into a unidimensional array.
+     * @return this matrix
+     */
     public O[] getMatrix() {
         return arrayType.cast(this.matrix);
     }
 
+    /**
+     * Returns a formatted string of matrix values.
+     * @return formatted matrix values
+     */
     public String toPrettyString() {
         StringBuilder builder = new StringBuilder();
 
@@ -69,11 +120,6 @@ public class ObjectMatrix<O> {
             builder.replace(builder.length() - 2, builder.length(), "]\n");
         }
         return builder.substring(0, builder.length() - 1);
-    }
-
-    private void checkIndexAccess(int x, int y) {
-        MathValidator.inInterval(x, 0, this.width, true, false);
-        MathValidator.inInterval(y, 0, this.height, true, false);
     }
 
     @Override
@@ -97,6 +143,17 @@ public class ObjectMatrix<O> {
     }
 
     @Override
+    public String toString() {
+        return "ObjectMatrix{" +
+                "type=" + type +
+                ", arrayType=" + arrayType +
+                ", matrix=" + Arrays.toString(arrayType.cast(matrix)) +
+                ", width=" + width +
+                ", height=" + height +
+                '}';
+    }
+
+    @Override
     public int hashCode() {
         int result = type != null ? type.hashCode() : 0;
         result = 31 * result + (arrayType != null ? arrayType.hashCode() : 0);
@@ -106,14 +163,25 @@ public class ObjectMatrix<O> {
         return result;
     }
 
-    @Override
-    public String toString() {
-        return "ObjectMatrix{" +
-                "type=" + type +
-                ", arrayType=" + arrayType +
-                ", matrix=" + Arrays.toString(arrayType.cast(matrix)) +
-                ", width=" + width +
-                ", height=" + height +
-                '}';
+    /**
+     * Parse an index to a couple of indexes
+     * @param index from index
+     * @return indexes
+     */
+    private int[] toIndexes(int index) {
+        int x = index % this.width;
+        index -= x;
+        int y = index / this.width;
+        return new int[] {x, y};
+    }
+
+    /**
+     * Check if targets index exist for this matrix.
+     * @param x x index
+     * @param y y index
+     */
+    private void checkIndexAccess(int x, int y) {
+        MathValidator.inInterval(x, 0, this.width, true, false);
+        MathValidator.inInterval(y, 0, this.height, true, false);
     }
 }
