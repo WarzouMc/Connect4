@@ -9,4 +9,5 @@ public class Grid {
     public Grid(int width, int height) {
         this.grid = new ObjectMatrix<>(Piece.class, Piece[].class, width, height, null);
     }
+
 }
