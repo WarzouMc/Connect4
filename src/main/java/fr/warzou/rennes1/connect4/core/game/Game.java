@@ -16,4 +16,8 @@ public class Game {
         this.firstPlayer = firstPlayer;
         this.secondPlayer = secondPlayer;
     }
+
+    public Grid getGrid() {
+        return this.grid;
+    }
 }

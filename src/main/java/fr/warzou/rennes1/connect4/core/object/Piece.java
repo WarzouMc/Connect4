@@ -8,10 +8,14 @@ public class Piece {
     private final Grid grid;
     private final int slot;
 
+    private final char view;
+
     public Piece(Player player, Grid grid, int slot) {
         this.player = player;
         this.grid = grid;
         this.slot = slot;
+
+        this.view = player == null ? '\\' : player.getIcon();
     }
 
     public Player getPlayer() {
@@ -24,5 +28,10 @@ public class Piece {
 
     public int getSlot() {
         return this.slot;
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(this.view);
     }
 }

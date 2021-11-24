@@ -15,8 +15,9 @@ public class GameStarter {
         this.gameLoop = gameLoop;
     }
 
+
     public static GameStarter createGameStarter() {
-        return createGameStarter(new Player());
+        return createGameStarter(new Player('.'));
     }
 
     public static GameStarter createGameStarter(Player player) {
@@ -38,5 +39,10 @@ public class GameStarter {
 
     public void start() {
         //todo
+        System.out.println(this.game.getGrid().getGrid().toPrettyString());
+    }
+
+    public Game getGame() {
+        return this.game;
     }
 }
