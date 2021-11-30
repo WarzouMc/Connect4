@@ -15,7 +15,7 @@ public class Piece {
         this.grid = grid;
         this.slot = slot;
 
-        this.view = player == null ? '\\' : player.getIcon();
+        this.view = player == null ? ' ' : player.getIcon();
     }
 
     public Player getPlayer() {
@@ -28,6 +28,14 @@ public class Piece {
 
     public int getSlot() {
         return this.slot;
+    }
+
+    public boolean asSamePlayer(Piece piece) {
+        if (player == piece.player)
+            return true;
+        if (player == null || piece.player == null)
+            return false;
+        return piece.player.equals(player);
     }
 
     @Override

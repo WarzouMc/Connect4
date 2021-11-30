@@ -1,7 +1,5 @@
 package fr.warzou.rennes1.connect4.utils.math;
 
-import fr.warzou.rennes1.connect4.utils.math.exception.MathValidatorException;
-
 import static fr.warzou.rennes1.connect4.utils.math.MathChars.*;
 
 /**
@@ -191,5 +189,22 @@ public class MathValidator {
     public static void equal(float a, float b) {
         if (a != b)
             throw new MathValidatorException(NON_EQUALS, a, b);
+    }
+
+    /**
+     * Just an exception throw when a validation fail into {@link MathValidator}.
+     *
+     * @see MathValidator
+     */
+    private static class MathValidatorException extends RuntimeException {
+
+        /**
+         * @param message target message
+         * @param args message argument
+         */
+        public MathValidatorException(String message, Object... args) {
+            super(String.format(message, args));
+        }
+
     }
 }

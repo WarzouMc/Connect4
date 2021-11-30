@@ -111,13 +111,14 @@ public class ObjectMatrix<O> {
      * @return formatted matrix values
      */
     public String toPrettyString() {
+        //3.1
         StringBuilder builder = new StringBuilder();
 
         for (int i = 0; i < this.height; i++) {
-            builder.append('[');
+            builder.append("| ");
             for (int j = 0; j < this.width; j++)
-                builder.append(getValue(j, i)).append("  ");
-            builder.replace(builder.length() - 2, builder.length(), "]\n");
+                builder.append(getValue(j, i)).append(" | ");
+            builder.replace(builder.length() - 2, builder.length(), "|\n");
         }
         return builder.substring(0, builder.length() - 1);
     }

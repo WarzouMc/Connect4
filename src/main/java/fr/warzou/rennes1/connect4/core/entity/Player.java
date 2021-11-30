@@ -11,4 +11,19 @@ public class Player {
     public char getIcon() {
         return this.icon;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Player player = (Player) o;
+
+        return icon == player.icon;
+    }
+
+    @Override
+    public int hashCode() {
+        return icon;
+    }
 }
