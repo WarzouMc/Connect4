@@ -15,10 +15,10 @@ public class ConnectFour {
     private int currentPlayer;
 
     private static final String PLAY_MESSAGE = "Quel coup pour le joueur %s ? -> ";
-    private static final String AI_MOMENT = "%s joue... ? -> ";
+    private static final String AI_MOMENT_MESSAGE = "%s joue... ? -> ";
     private static final String NOT_INT_MESSAGE = "Le message '%s' ne représente pas un entier naturel !";
-    private static final String NOT_IN_BOUND = "L'entier '%s' n'est pas entre 1 et 7 compris !";
-    private static final String WIN = "Le joueur gagnant est %s !!!\nGrille final :\n";
+    private static final String NOT_IN_BOUND_MESSAGE = "L'entier '%s' n'est pas entre 1 et 7 compris !";
+    private static final String WIN_MESSAGE = "Le joueur gagnant est %s !!!\nGrille final :\n";
     private static final char[] ICONS = new char[] {'o', 'x'};
 
     /**
@@ -52,7 +52,7 @@ public class ConnectFour {
             printGrid();
 
             if (this.ai && this.currentPlayer == 1) {
-                System.out.printf((AI_MOMENT) + "%n", this.playerNames[1]);
+                System.out.printf((AI_MOMENT_MESSAGE) + "%n", this.playerNames[1]);
                 if (!playAI())
                     playRandom();
                 this.currentPlayer = 0;
@@ -83,7 +83,7 @@ public class ConnectFour {
             return;
         }
 
-        System.out.printf((WIN) + "%n", hasWin(0, this.grid) ? this.playerNames[0] : this.playerNames[1]);
+        System.out.printf((WIN_MESSAGE) + "%n", hasWin(0, this.grid) ? this.playerNames[0] : this.playerNames[1]);
         printGrid();
     }
 
@@ -103,7 +103,7 @@ public class ConnectFour {
                 continue;
             }
             column = Integer.parseInt(line);
-            System.out.printf(NOT_IN_BOUND + '\n', column);
+            System.out.printf(NOT_IN_BOUND_MESSAGE + '\n', column);
             System.out.printf(PLAY_MESSAGE, this.playerNames[this.currentPlayer]);
         }
         return column;
