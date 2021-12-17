@@ -65,6 +65,7 @@ public class ConnectFour {
             this.currentPlayer = this.currentPlayer == 0 ? 1 : 0;
         }
         win();
+        scanner.close();
     }
 
     /**
