@@ -44,7 +44,8 @@ public class Grid {
         Player player = piece.getPlayer();
         if (player == null)
             return false;
-        return checkVerticalWin(player, column, row) || checkHorizontaleWin(player, column, row);
+
+        return checkVerticalWin(player, column, row) || checkHorizontaleWin(player, column, row) || checkDiagonalWin(player, column, row);
     }
 
     private boolean checkVerticalWin(Player player, int column, int row) {
@@ -55,7 +56,7 @@ public class Grid {
             Player check = piece.getPlayer();
             if (check == null)
                 break;
-            if (!check.equals(player))
+            if (!player.equals(check))
                 break;
             countUp++;
         }
@@ -65,7 +66,7 @@ public class Grid {
             Player check = piece.getPlayer();
             if (check == null)
                 break;
-            if (!check.equals(player))
+            if (!player.equals(check))
                 break;
             countDown++;
         }
@@ -81,7 +82,7 @@ public class Grid {
             Player check = piece.getPlayer();
             if (check == null)
                 break;
-            if (!check.equals(player))
+            if (!player.equals(check))
                 break;
             countLeft++;
         }
@@ -91,11 +92,74 @@ public class Grid {
             Player check = piece.getPlayer();
             if (check == null)
                 break;
-            if (!check.equals(player))
+            if (!player.equals(check))
                 break;
             countRight++;
         }
 
         return countLeft + countRight >= 4;
+    }
+
+    private boolean checkDiagonalWin(Player player, int column, int row) {
+        return checkDiagonalUpWin(player, column, row) || checkDiagonalDownWin(player, column, row);
+    }
+
+    private boolean checkDiagonalUpWin(Player player, int column, int row) {
+        int countUp = 0;
+        int countDown = 0;
+
+        int checkRow = row - 1;
+        for (int checkColumn = column - 1; checkColumn >= 0; checkColumn--) {
+            if (checkRow < 0)
+                break;
+            Piece piece = this.grid.getValue(checkColumn, checkRow--);
+            Player check = piece.getPlayer();
+            if (!player.equals(check))
+                break;
+            countUp++;
+        }
+
+        checkRow = row;
+        for (int checkColumn = column; checkColumn < this.grid.getWidth(); checkColumn++) {
+            if (checkRow >= this.grid.getHeight())
+                break;
+            Piece piece = this.grid.getValue(checkColumn, checkRow++);
+            Player check = piece.getPlayer();
+            if (!player.equals(check))
+                break;
+            countDown++;
+        }
+
+        return countUp + countDown >= 4;
+    }
+
+    private boolean checkDiagonalDownWin(Player player, int column, int row) {
+        int countUp = 0;
+        int countDown = 0;
+
+        int checkRow = row;
+        for (int checkColumn = column - 1; checkColumn >= 0; checkColumn--) {
+            if (checkRow >= this.grid.getHeight())
+                break;
+            Piece piece = this.grid.getValue(checkColumn, checkRow++);
+            Player check = piece.getPlayer();
+            if (!player.equals(check))
+                break;
+            countUp++;
+        }
+
+        checkRow = row - 1;
+        for (int checkColumn = column; checkColumn < this.grid.getWidth(); checkColumn++) {
+            if (checkRow < 0)
+                break;
+            Piece piece = this.grid.getValue(checkColumn, checkRow--);
+            Player check = piece.getPlayer();
+            if (!player.equals(check))
+                break;
+            countDown++;
+        }
+
+        System.out.println(countDown + " " + countUp);
+        return countUp + countDown >= 4;
     }
 }

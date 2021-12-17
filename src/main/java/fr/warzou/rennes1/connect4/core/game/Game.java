@@ -36,7 +36,7 @@ public class Game {
     public static Game createGame(int column, int row, Player player) {
         //1.1
         Grid grid = new Grid(column, row);
-        return createGame(true, grid, player, null);
+        return createGame(true, grid, player, new Player('o'));
     }
 
     private static Game createGame(boolean ai, Grid grid, Player firstPlayer, Player secondPlayer) {
@@ -47,5 +47,9 @@ public class Game {
 
     public Player getFirstPlayer() {
         return this.firstPlayer;
+    }
+
+    public Player getSecondPlayer() {
+        return this.secondPlayer;
     }
 }
