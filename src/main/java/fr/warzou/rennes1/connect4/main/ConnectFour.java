@@ -474,7 +474,7 @@ public class ConnectFour {
         return "ConnectFour{" +
                 "width=" + width +
                 ", height=" + height +
-                ", grid=" + Arrays.toString(grid) +
+                ", grid=" + Arrays.deepToString(grid) +
                 ", ia=" + ai +
                 ", playerNames=" + Arrays.toString(playerNames) +
                 ", currentPlayer=" + currentPlayer +
